@@ -14,8 +14,7 @@
 ### Project Structure
 - The "app" folder contains the main files responsible for the server's functionality.
 
-### Queries
-# DATABASE:
+## Queries
 	create database myshop;
 	use myshop;
 
