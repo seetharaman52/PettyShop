@@ -50,3 +50,6 @@
 
 	users_list:
 		create table users_list(user varchar(25), secretkey varchar(20));
+
+## Note: Use this query before login: 
+	insert into users_list(user, secretkey) values('admin','admin')
