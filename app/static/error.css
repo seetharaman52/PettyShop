@@ -1,0 +1,25 @@
+/* style.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    margin: 0;
+    padding: 0;
+}
+
+.error-container {
+    background-color: #f44336;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 100px auto;
+    width: 60%;
+}
+
+.error-container h1 {
+    font-size: 24px;
+}
+
+.error-container p {
+    font-size: 18px;
+}

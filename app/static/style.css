@@ -1,0 +1,74 @@
+/* style.css */
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-image: url("style-bg1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+.heading_one{
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 300px;
+    margin-left: 280px;
+}
+.heading_two{
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 5px;
+    text-align: center;
+    font-style: italic;
+    font-family: 'Open Sans', sans-serif;
+    margin-top: 10px;
+    margin-left: 820px;
+    margin-right: 540px;
+}
+
+.username_css{
+    font-family: Helvetica, sans-serif;
+    font-size: 24px;
+    display: inline-block;
+    max-height: 10px;
+    margin-top: 20px;
+    margin-left: 925px;
+    width: 700px;
+}
+.password_css{
+    font-family: Helvetica, sans-serif;
+    font-size: 24px;
+    display: inline-block;
+    max-height: 10px;
+    margin-top: 20px;
+    margin-left: 930px;
+    width: 700px;
+}
+
+input[type="text"], input[type="password"]{
+    margin-top: 5px
+}
+
+.submit-container{
+    text-align: center;
+    margin-top: 50px;
+    margin-top: 50px;
+    margin-left: 280px;
+}
+
+button[type="submit"]{
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    color: black;
+}
+

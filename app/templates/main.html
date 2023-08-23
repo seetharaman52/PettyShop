@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="icon" href="static/corner.png" type="png"/>
+    <meta charset="UTF-8">
+    <title>Main Page</title>
+</head>
+<body>
+<div class="container">
+<h1 class="heading">Namma Kadai</h1>
+
+<div class="centered-content">
+<h2>Cash Balance: {{ cash_balance }}</h2>
+<h2>Add Cash:</h2>
+    <script>
+        function validateForm_cash() {
+            var amount = document.forms["addCash"]["credit"].value;
+            if (parseInt(amount) <= 0 || amount=="") {
+                alert("Please enter a positive rate.");
+                return false;
+            }
+        }
+    </script>
+        <form name="addCash" action="/add_cash" method="POST" onsubmit="return validateForm_cash();">
+            <div class="input-container">
+            <input type="number" placeholder="Amount" name="credit"><br><br>
+            <button type="submit">Add</button>
+            </div>
+        </form>
+</div>
+<h2>History (Recent 5)</h2>
+    <table>
+    <thead>
+        <tr>
+            <th>Purchase ID</th>
+            <th>Purchase Date</th>
+            <th>Purchase Time</th>
+            <th>Item Id</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if his %}
+            {% for h in his[-5:] %}
+            <tr>
+                <td>{{ h[0] }}</td>
+                <td>{{ h[1] }}</td>
+                <td>{{ h[2] }}</td>
+                <td>{{ h[3] }}</td>
+                <td>{{ h[4] }}</td>
+                <td>{{ h[5] }}</td>
+                <td>{{ h[6] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7">There is no history of purchase.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table><br>
+
+
+<h2>Available Items</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Item ID</th>
+            <th>Item Name</th>
+            <th>Rate</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if items %}
+            {% for item in items %}
+            <tr>
+                <td>{{ item[0] }}</td>
+                <td>{{ item[1] }}</td>
+                <td>{{ item[2] }}</td>
+                <td>{{ get_qty(item[0]) }}</td>
+                <td>
+                <form method="POST" action="/remove_item">
+                    <input type="hidden" name="item_id" value="{{ item[0] }}">
+                    <button type="submit">Remove</button>
+                </form>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="5">There are no items, please add an item.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table><br>
+<script>
+        function validateForm_add() {
+            var id = document.forms["AddForm"]["ItemId"].value;
+            var name = document.forms["AddForm"]["ItemName"].value;
+            var rate = document.forms["AddForm"]["rate"].value;
+            if (parseInt(rate) < 0 || rate=="") {
+                alert("Please enter a positive rate.");
+                return false;
+            }
+            if (parseInt(id) <= 0 || id=="") {
+                alert("Please enter a id.");
+                return false;
+            }
+            if (name=="") {
+                alert("Please enter a item name.");
+                return false;
+            }
+        }
+</script>
+<form name="AddForm" method="POST" action="/adding_items" onsubmit="return validateForm_add();">
+    <label style="font-weight: bold; font-family: Helvetica, sans-serif;">Add Items:</label><br><br>
+    <input type="text" placeholder="Item ID" name="ItemId"><br><br>
+    <input type="text" placeholder="Item Name" name="ItemName"><br><br>
+    <input type="number" placeholder="Rate" name="rate"><br><br>
+    <button type="submit">Add</button>
+</form>
+<br>
+<script>
+        function validateForm_purchase() {
+            var id = document.forms["PurchaseForm"]["item_id"].value;
+            var rate = document.forms["PurchaseForm"]["rate"].value;
+            var qty = document.forms["PurchaseForm"]["qty"].value;
+            if (parseInt(qty) <= 0 || qty=="") {
+                alert("Please enter a positive quantity.");
+                return false;
+            }
+            if (parseInt(rate) <= 0 || rate=="") {
+                alert("Please enter a positive rate.");
+                return false;
+            }
+            if (parseInt(id) <= 0 || id=="") {
+                alert("Please enter a positive id.");
+                return false;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/check_item_exists_1?item_id=" + id, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (!response.exists) {
+                            alert("Item does not exist.");
+                        } else {
+                            document.forms["PurchaseForm"].submit();
+                        }
+                    } else {
+                        alert("Error checking item existence.");
+                    }
+                }
+            };
+            xhr.send();
+            return false;
+        }
+</script>
+<form name="PurchaseForm" method="POST" action="/purchasing_items" onsubmit="return validateForm_purchase();">
+    <label style="font-weight: bold; font-family: Helvetica, sans-serif;">Purchase Items:</label><br><br>
+    <select name="item_id" class="select-style">
+        <option value="" selected disabled>Select an item</option>
+        {% for item in available_items %}
+            <option value="{{ item[0] }}">{{ item[0] }} - {{ item[1] }}</option>
+        {% endfor %}
+    </select><br><br>
+    <input type="text" placeholder="Quantity" name="qty"><br><br>
+    <input type="number" placeholder="rate" name="rate"><br><br>
+    <button type="submit">Purchase</button>
+</form>
+<br>
+<script>
+        function validateForm_sell() {
+            var id = document.forms["sellForm"]["ItemId"].value;
+            var rate = document.forms["sellForm"]["rate"].value;
+            var qty = document.forms["sellForm"]["qty"].value;
+            if (parseInt(qty) <= 0 || qty=="") {
+                alert("Please enter a positive quantity.");
+                return false;
+            }
+            if (parseInt(rate) <= 0 || rate=="") {
+                alert("Please enter a positive rate.");
+                return false;
+            }
+            if (parseInt(id) <= 0 || id=="") {
+                alert("Please enter a positive id.");
+                return false;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "/check_item_exists_2?item_id=" + id, true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (!response.exists) {
+                            alert("Item does not exist.");
+                        } else if (response.available_qty < parseInt(qty)){
+                            alert("You entered too much quantity. Available quantity: " + response.available_qty);
+                        } else {
+                            // If item exists, continue with form submission
+                            document.forms["sellForm"].submit();
+                        }
+                    } else {
+                        alert("Error checking item existence.");
+                    }
+                }
+            };
+            xhr.send();
+            return false;
+        }
+</script>
+<form name="sellForm" method="POST" action="/sell_items" onsubmit="return validateForm_sell();">
+    <label style="font-weight: bold; font-family: Helvetica, sans-serif;">Sell Items:</label><br><br>
+    <select name="ItemId" class="select-style">
+        <option value="" selected disabled>Select an item</option>
+        {% for item in available_items %}
+            <option value="{{ item[0] }}">{{ item[0] }} - {{ item[1] }}</option>
+        {% endfor %}
+    </select><br><br>
+    <input type="text" placeholder="Quantity" name="qty"><br><br>
+    <input type="text" placeholder="Rate" name="rate"><br><br>
+    <button type="submit">Sell</button>
+</form>
+<br>
+</div>
+<div class="logout">
+    <form action="/logout" method="POST">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='added_cash.css') }}">
+    <meta charset="UTF-8">
+    <title>Cash added</title>
+</head>
+<body>
+    <div class="container">
+        {% if success %}
+            <h1>Cash was successfully added to the company.</h1>
+            <p>Money Money!</p>
+        {% else %}
+            <h1>Failed to add cash to the company.</h1>
+            <p>Cash not added</p>
+        {% endif %}
+    </div>
+</body>
+</html>
+
