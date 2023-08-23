@@ -1,1 +1,1 @@
-![Alt Text](https://drive.google.com/file/d/10grNpu-RaH2DlmsPDUbDRseum2t0XOqm/view?usp=sharing)
+![Alt Text](https://raw.githubusercontent.com/seetharaman52/PettyShop/main/assests/Screenshots/1.png)
