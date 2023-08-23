@@ -15,7 +15,7 @@
 - The "app" folder contains the main files responsible for the server's functionality.
 
 ### Queries
-## DATABASE:
+# DATABASE:
 	create database myshop;
 	use myshop;
 
