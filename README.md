@@ -1,4 +1,16 @@
-<p>Project can be started by executing <i><b>run.py</b></i> with python3</p>
-<b>Note: </b>Please install python3, create virtual environment and then execute the command <i><b>"pip install flask"</b></i> and <i><b>"pip install mysql-connector-python"</b></i>
-<p>The folder "assets" contains the screenshots of the web app</p>
-<p>aThe folder app contains the main files for the working of server</p>
+### Getting Started
+To start the project, execute the <i><b>run.py</b></i> file using Python 3
+
+### Prerequisites
+Install Python 3.
+Create a virtual environment.
+Install required packages using the following commands:
+
+pip install flask
+pip install mysql-connector-python
+
+### Screenshots
+The "assets" folder contains screenshots of the web app to give you a visual overview of its features.
+
+### Project Structure
+The "app" folder contains the main files responsible for the server's functionality.
