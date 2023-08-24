@@ -11,7 +11,7 @@
 ### Screenshots
 - The "assets" folder contains screenshots of the web app to give you a visual overview of its features.
 
-### Project Structure
+### Main folder
 - The "app" folder contains the main files responsible for the server's functionality.
 
 ## Queries
