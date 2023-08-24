@@ -18,7 +18,7 @@
 	create database myshop;
 	use myshop;
 
-## TABLE'S:
+## TABLES:
 	company:
 		create table company(company_name varchar(30), cash_balance decimal(10, 2));
 		ALTER TABLE company add constraint positive_cash_balance CHECK (cash_balance > 0);
