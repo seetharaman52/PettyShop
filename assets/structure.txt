@@ -1,28 +1,45 @@
-/home/user/Projects/flask-tutorial
-├── flaskr/
+/home/user/Projects/PettyShop
+├── app/
 │   ├── __init__.py
-│   ├── db.py
-│   ├── schema.sql
-│   ├── auth.py
-│   ├── blog.py
+│   ├── routes.py
 │   ├── templates/
-│   │   ├── base.html
-│   │   ├── auth/
-│   │   │   ├── login.html
-│   │   │   └── register.html
-│   │   └── blog/
-│   │       ├── create.html
-│   │       ├── index.html
-│   │       └── update.html
+│   │	├── added_cash.html
+│   │	├── error.html
+│   │	├── index.html
+│   │	├── ItemAdded.html
+│   │	├── ItemExist.html
+│   │	├── main.html
+│   │	├── not_enough_balance.html
+│   │	├── purchased.html
+│   │	├── removeItem.html
+│   │	├── sell.html
+│   │	├── userAdded.html
+│   │	└── UserExist.html
+│   │
 │   └── static/
-│       └── style.css
-├── tests/
-│   ├── contest.py
-│   ├── data.sql
-│   ├── test_factory.py
-│   ├── test_db.py
-│   ├── test_auth.py
-│   └── test_blog.py
-├── .venv/
-├── pyproject.toml
-└── MANIFEST.in
+│       ├── 1.jpg
+│       ├── 2.jpg
+│       ├── 4.jpg
+│       ├── 5.jpg
+│       ├── added_cash.css
+│       ├── corner.png
+│       ├── error.css
+│       ├── ItemAdded.css
+│       ├── ItemExist.css
+│       ├── main.css
+│       ├── purchased.css
+│       ├── removeItem.css
+│       ├── sell.css
+│       ├── style.css
+│       ├── style-bg1.jpg
+│       ├── userAdded.css
+│       └── userExist.css
+│
+└────── assets/
+        ├── Screenshots/
+        │   ├── 1.png
+        │   ├── 2.png
+        │   ├── 3.png
+        │   └── LoginPage.png
+        │
+        └── Presentation.pptx
