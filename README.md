@@ -92,7 +92,7 @@
 	│       ├── userAdded.css
 	│       └── userExist.css
 	│
-	└────── assets/
+	├────── assets/
         │	├── Screenshots/
         │	│   ├── 1.png
         │	│   ├── 2.png
