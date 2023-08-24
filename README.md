@@ -59,7 +59,7 @@
     ```
   - Finally, you can access the newly imported database by using the command:
     ```
-    mysql -u root -p
+    mysql -u "username" -p
     ```
 
 ### Note: Use this query before login: 
