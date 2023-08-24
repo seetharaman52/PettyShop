@@ -50,9 +50,9 @@
 	users_list:
 		create table users_list(user varchar(25), secretkey varchar(20));
 
-## Import sql schema
+### Import MySQL schema
 - For Linux users
-  I have exported my schema in a name "myshop.sql" using a command "mysqldump -u root -p -d myshop > myshop.sql";
+- I have exported my schema in a name "myshop.sql" using a command "mysqldump -u root -p -d myshop > myshop.sql";
 - Just create a database with any name, then goto Linux terminal (basically bash);
 - Change the working directory to the location of myshop.sql;
 - mysql -u "username" -p "Your database Name" < myshop.sql;
