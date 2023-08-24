@@ -55,8 +55,8 @@
  	insert into company(company_name, cash_balance) values('Stationery Paradise', 0);
 
 ## Project Structure :
-	
-/home/user/Projects/PettyShop
+
+	/home/user/Projects/PettyShop
 	├── app/
 	│   ├── __init__.py
 	│   ├── routes.py
