@@ -54,12 +54,12 @@
 	insert into users_list(user, secretkey) values('admin','admin');
  	insert into company(company_name, cash_balance) values('Stationery Paradise', 0);
 
-   	- For Linux users,
-    	- I have exported my schema in a name "myshop.sql"
-     	- Just create a database with any name, then goto Linux terminal (basically bash)
-        - Change the working directory to the location of myshop.sql
-	- mysql -u "username" -p "Your database Name" < myshop.sql
- 	- Now use "mysql -u root -p" to enter into db in terminal
+   	For Linux users,
+    	I have exported my schema in a name "myshop.sql"
+     	Just create a database with any name, then goto Linux terminal (basically bash)
+        Change the working directory to the location of myshop.sql
+	mysql -u "username" -p "Your database Name" < myshop.sql
+ 	Now use "mysql -u root -p" to enter into db in terminal
 	
 
 ## Project Structure :
