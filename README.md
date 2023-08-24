@@ -53,3 +53,50 @@
 ## Note: Use this query before login: 
 	insert into users_list(user, secretkey) values('admin','admin');
  	insert into company(company_name, cash_balance) values('Stationery Paradise', 0);
+
+## Project Structure :
+	/home/user/Projects/PettyShop
+	├── app/
+	│   ├── __init__.py
+	│   ├── routes.py
+	│   ├── templates/
+	│   │	├── added_cash.html
+	│   │	├── error.html
+	│   │	├── index.html
+	│   │	├── ItemAdded.html
+	│   │	├── ItemExist.html
+	│   │	├── main.html
+	│   │	├── not_enough_balance.html
+	│   │	├── purchased.html
+	│   │	├── removeItem.html
+	│   │	├── sell.html
+	│   │	├── userAdded.html
+	│   │	└── UserExist.html
+	│   │
+	│   └── static/
+	│       ├── 1.jpg
+	│       ├── 2.jpg
+	│       ├── 4.jpg
+	│       ├── 5.jpg
+	│       ├── added_cash.css
+	│       ├── corner.png
+	│       ├── error.css
+	│       ├── ItemAdded.css
+	│       ├── ItemExist.css
+	│       ├── main.css
+	│       ├── purchased.css
+	│       ├── removeItem.css
+	│       ├── sell.css
+	│       ├── style.css
+	│       ├── style-bg1.jpg
+	│       ├── userAdded.css
+	│       └── userExist.css
+	│
+	└────── assets/
+        	├── Screenshots/
+        	│   ├── 1.png
+        	│   ├── 2.png
+        	│   ├── 3.png
+        	│   └── LoginPage.png
+        	│
+        	└── Presentation.pptx
