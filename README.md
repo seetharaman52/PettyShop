@@ -1,8 +1,8 @@
 ### Getting Started
-- To start the project, execute the <i><b>run.py</b></i> file using Python 3
+- To start the project, execute the <b>run.py</b> file using Python3
 
 ### Prerequisites
-- Install Python 3.
+- Install Python3.
 - Create a virtual environment.
 - Install required packages using the following commands:
   - pip install flask
@@ -14,7 +14,7 @@
 ### Main folder
 - The "app" folder contains the main files responsible for the server's functionality.
 
-### TABLES - reference:
+### TABLES:
 	company:
 		create table company(company_name varchar(30), cash_balance decimal(10, 2));
 		ALTER TABLE company add constraint positive_cash_balance CHECK (cash_balance > 0);
