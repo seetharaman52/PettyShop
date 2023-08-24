@@ -51,12 +51,12 @@
 		create table users_list(user varchar(25), secretkey varchar(20));
 
 ## Import sql schema
-	For Linux users
-    	I have exported my schema in a name "myshop.sql" using a command "mysqldump -u root -p -d myshop > myshop.sql";
-     	Just create a database with any name, then goto Linux terminal (basically bash);
-        Change the working directory to the location of myshop.sql;
-	mysql -u "username" -p "Your database Name" < myshop.sql;
- 	Now use "mysql -u root -p" to enter into db in terminal;
+- For Linux users
+  I have exported my schema in a name "myshop.sql" using a command "mysqldump -u root -p -d myshop > myshop.sql";
+- Just create a database with any name, then goto Linux terminal (basically bash);
+- Change the working directory to the location of myshop.sql;
+- mysql -u "username" -p "Your database Name" < myshop.sql;
+- Now use "mysql -u root -p" to enter into db in terminal;
 
 ## Note: Use this query before login: 
 	insert into users_list(user, secretkey) values('admin','admin');
