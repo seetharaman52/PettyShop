@@ -93,10 +93,13 @@
 	│       └── userExist.css
 	│
 	└────── assets/
-        	├── Screenshots/
-        	│   ├── 1.png
-        	│   ├── 2.png
-        	│   ├── 3.png
-        	│   └── LoginPage.png
-        	│
-        	└── Presentation.pptx
+        │	├── Screenshots/
+        │	│   ├── 1.png
+        │	│   ├── 2.png
+        │	│   ├── 3.png
+        │	│   └── LoginPage.png
+        │	│
+        │	└── Presentation.pptx
+	│
+  	└────── Exported Schema/
+   		└── myshop.sql 
