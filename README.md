@@ -51,8 +51,8 @@
 	- I have exported my schema in a name "myshop.sql" using a command "mysqldump -u root -p -d myshop > myshop.sql"
 	- Just create a database with any name, then goto terminal
 	- Change the working directory to where myshop.sql is located then enter,
-	- mysql -u "username" -p "Your database Name" < myshop.sql
-	- Now use "mysql -u root -p" to enter into db in terminal
+   		mysql -u "username" -p "Your database Name" < myshop.sql
+	- Now use "mysql -u root -p" to enter Database in terminal
 
 ### Note: Use this query before login: 
 	insert into users_list(user, secretkey) values('admin','admin');
