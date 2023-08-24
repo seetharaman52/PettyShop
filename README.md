@@ -14,11 +14,11 @@
 ### Main folder
 - The "app" folder contains the main files responsible for the server's functionality.
 
-## Queries
+### Queries
 	create database myshop;
 	use myshop;
 
-## TABLES:
+### TABLES:
 	company:
 		create table company(company_name varchar(30), cash_balance decimal(10, 2));
 		ALTER TABLE company add constraint positive_cash_balance CHECK (cash_balance > 0);
@@ -58,11 +58,11 @@
 	- mysql -u "username" -p "Your database Name" < myshop.sql
 	- Now use "mysql -u root -p" to enter into db in terminal
 
-## Note: Use this query before login: 
+### Note: Use this query before login: 
 	insert into users_list(user, secretkey) values('admin','admin');
  	insert into company(company_name, cash_balance) values('Stationery Paradise', 0);
 	
-## Project Structure :
+### Project Structure :
 
 	/home/user/Projects/PettyShop
 	├── app/
