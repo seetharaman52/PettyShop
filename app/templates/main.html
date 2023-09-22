@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link rel="icon" href="static/corner.png" type="png"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>
     <meta charset="UTF-8">
     <title>Main Page</title>
 </head>
@@ -29,39 +30,6 @@
             </div>
         </form>
 </div>
-<h2>History (Recent 5)</h2>
-    <table>
-    <thead>
-        <tr>
-            <th>Purchase ID</th>
-            <th>Purchase Date</th>
-            <th>Purchase Time</th>
-            <th>Item Id</th>
-            <th>Quantity</th>
-            <th>Rate</th>
-            <th>Amount</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% if his %}
-            {% for h in his[-5:] %}
-            <tr>
-                <td>{{ h[0] }}</td>
-                <td>{{ h[1] }}</td>
-                <td>{{ h[2] }}</td>
-                <td>{{ h[3] }}</td>
-                <td>{{ h[4] }}</td>
-                <td>{{ h[5] }}</td>
-                <td>{{ h[6] }}</td>
-            </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="7">There is no history of purchase.</td>
-            </tr>
-        {% endif %}
-    </tbody>
-</table><br>
 
 
 <h2>Available Items</h2>
@@ -107,8 +75,12 @@
                 alert("Please enter a positive rate.");
                 return false;
             }
-            if (parseInt(id) <= 0 || id=="") {
+            if (id=="") {
                 alert("Please enter a id.");
+                return false;
+            }
+            if (parseInt(id) <= 0) {
+                alert("Please enter a positive id.");
                 return false;
             }
             if (name=="") {
@@ -228,6 +200,154 @@
     <button type="submit">Sell</button>
 </form>
 <br>
+<h2>History of Purchase</h2>
+    <table id="purchaseTable">
+    <thead>
+        <tr>
+            <th>Purchase ID</th>
+            <th>Purchase Date</th>
+            <th>Purchase Time</th>
+            <th>Item Id</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Amount</th>
+            <th>Item Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if his %}
+            {% for h in his[-5:] %}
+            <tr>
+                <td>{{ h[0] }}</td>
+                <td>{{ h[1] }}</td>
+                <td>{{ h[2] }}</td>
+                <td>{{ h[3] }}</td>
+                <td>{{ h[4] }}</td>
+                <td>{{ h[5] }}</td>
+                <td>{{ h[6] }}</td>
+                <td>{{ h[7] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8">There is no history of purchase.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table><br>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let button = document.getElementById('purchaseButton');
+        button.addEventListener('click', exportPDF);
+        var specialElementHandler = {
+            '.no-export': function(element, renderer) {
+                return true;
+            }
+        };
+
+        function exportPDF() {
+            var doc = new jsPDF('p', 'pt', 'a4');
+            var source = document.getElementById("purchaseTable").innerHTML;
+            var margins = {
+                top: 20,
+                bottom: 10,
+                left: 100,
+                width: 350
+            };
+
+            doc.fromHTML(
+                source,
+                margins.left,
+                margins.top,
+                {
+                    "width": margins.width,
+                    elementHandlers: specialElementHandler
+                },
+                function(dispose) {
+                    doc.save("output.pdf");
+                },
+                margins
+            );
+        }
+    });
+</script>
+<div class="centered-content">
+<button id="purchaseButton">Export Purchase Table as PDF</button>
+</div>
+<br>
+<h2>History of Sales</h2>
+    <table id="salesTable">
+    <thead>
+        <tr>
+            <th>Sold ID</th>
+            <th>Sold Date</th>
+            <th>Sold Time</th>
+            <th>Item Id</th>
+            <th>Quantity</th>
+            <th>Rate</th>
+            <th>Amount</th>
+            <th>Item Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% if dis %}
+            {% for h in dis[-5:] %}
+            <tr>
+                <td>{{ h[0] }}</td>
+                <td>{{ h[1] }}</td>
+                <td>{{ h[2] }}</td>
+                <td>{{ h[3] }}</td>
+                <td>{{ h[4] }}</td>
+                <td>{{ h[5] }}</td>
+                <td>{{ h[6] }}</td>
+                <td>{{ h[7] }}</td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="8">There is no history of Sales.</td>
+            </tr>
+        {% endif %}
+    </tbody>
+</table><br>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let button = document.getElementById('salesButton');
+        button.addEventListener('click', exportPDF);
+        var specialElementHandler = {
+            '.no-export': function(element, renderer) {
+                return true;
+            }
+        };
+
+        function exportPDF() {
+            var doc = new jsPDF('p', 'pt', 'a4');
+            var source = document.getElementById("salesTable").innerHTML;
+            var margins = {
+                top: 20,
+                bottom: 10,
+                left: 100,
+                width: 350
+            };
+
+            doc.fromHTML(
+                source,
+                margins.left,
+                margins.top,
+                {
+                    "width": margins.width,
+                    elementHandlers: specialElementHandler
+                },
+                function(dispose) {
+                    doc.save("output.pdf");
+                },
+                margins
+            );
+        }
+    });
+</script>
+<div class="centered-content">
+<button id="salesButton">Export Sales Table as PDF</button>
 </div>
 <div class="logout">
     <form action="/logout" method="POST">
