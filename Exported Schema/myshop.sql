@@ -55,8 +55,9 @@ DROP TABLE IF EXISTS `item_qty`;
 CREATE TABLE `item_qty` (
   `item_id` int DEFAULT NULL,
   `qty` int DEFAULT NULL,
-  KEY `item_id` (`item_id`),
-  CONSTRAINT `item_qty_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE
+  KEY `item_qty_ibfk_1` (`item_id`),
+  CONSTRAINT `item_qty_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE,
+  CONSTRAINT `check_qty_gt_eq_zero` CHECK ((`qty` >= 0))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -124,4 +125,4 @@ CREATE TABLE `users_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-24 20:46:13
+-- Dump completed on 2023-09-22 12:10:11
