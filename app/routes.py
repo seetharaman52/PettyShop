@@ -33,19 +33,20 @@ def login():
             my_cursor.execute(query, ("Stationery Paradise",))
             amount = my_cursor.fetchall()
             return render_template('main.html', items=list_of_items(),
-                                   cash_balance=amount[0][0], available_items=list_of_items())
+                                   cash_balance=amount[0][0], available_items=list_of_items(),
+                                   his=list_of_items_history(), dis=sold_item_history())
         else:
             return render_template("error.html")
 
 
-@app.route("/main_page")
+@app.route("/main_page", methods=["GET", "POST"])
 def main_page():
     query = "select cash_balance from company where company_name = %s"
     my_cursor.execute(query, ("Stationery Paradise",))
     amount = my_cursor.fetchall()
     return render_template('main.html', items=list_of_items(),
                            cash_balance=amount[0][0], available_items=list_of_items(),
-                           his=list_of_items_history())
+                           his=list_of_items_history(), dis=sold_item_history())
 
 
 def list_of_items():
@@ -56,6 +57,13 @@ def list_of_items():
         return res
     return ""
 
+def sold_item_history():
+    query = "select * from sales"
+    my_cursor.execute(query)
+    res = my_cursor.fetchall()
+    if res:
+        return res
+    return ""
 
 def list_of_items_history():
     query = "select * from purchase"
@@ -85,21 +93,26 @@ def purchase_items():
     date = current_datetime.strftime("%Y-%m-%d")
     time = current_datetime.strftime("%H:%M:%S")
     item_id = request.form.get("item_id")
+    items = list_of_items()
+    print(items)
+    item_name = None
+    for item in items:
+        if int(item[0]) == int(item_id):
+            item_name = item[1]
+            break
+    print(item_name)
     qty = int(request.form.get("qty"))
     rate = int(request.form.get("rate"))
     amount = qty * rate
-
     my_cursor.execute("select max(purchase_id) from purchase")
     max_id = my_cursor.fetchone()[0]
     max_id = max_id + 1 if max_id else 1
-
     query = "select * from item where item_id=%s"
     my_cursor.execute(query, (item_id,))
     if my_cursor.fetchone():
         query = "select qty from item_qty where item_id=%s"
         my_cursor.execute(query, (item_id,))
         existing_qty = my_cursor.fetchone()
-
         if existing_qty:
             new_qty = existing_qty[0] + qty
             query = "update item_qty set qty=%s where item_id=%s"
@@ -107,9 +120,9 @@ def purchase_items():
         else:
             query = "insert into item_qty(item_id, qty) values(%s, %s)"
             my_cursor.execute(query, (item_id, qty,))
-        query = ("insert into purchase(purchase_id, purchase_date, purchase_time, item_id, qty, rate, amount) "
-                 "values(%s, %s, %s, %s, %s, %s, %s)")
-        data = (max_id, date, time, item_id, qty, rate, amount)
+        query = ("insert into purchase(purchase_id, purchase_date, purchase_time, item_id, qty, rate, amount, item_name) "
+                 "values(%s, %s, %s, %s, %s, %s, %s, %s)")
+        data = (max_id, date, time, item_id, qty, rate, amount, item_name)
         my_cursor.execute(query, data)
         query = "UPDATE company SET cash_balance = cash_balance - %s WHERE company_name = %s"
         my_cursor.execute(query, (amount, "Stationery Paradise"))
@@ -163,7 +176,7 @@ def sell_items():
     current_datetime = datetime.datetime.now()
     date = current_datetime.strftime("%Y-%m-%d")
     time = current_datetime.strftime("%H:%M:%S")
-    my_cursor.execute("select max(sales_id) from sales")  # 0
+    my_cursor.execute("select max(sales_id) from sales")
     res = my_cursor.fetchall()
     max_id = res[0][0]
     if not max_id:
@@ -174,14 +187,21 @@ def sell_items():
     qty = request.form.get("qty")
     rate = request.form.get("rate")
     check = items_available(item_id, qty)
+    item_name = None
+    items = list_of_items()
+    for item in items:
+        if int(item[0]) == int(item_id):
+            item_name = item[1]
+            break
+    print(item_name)
     if check[0]:
         available_qty = check[1]
         rem = int(available_qty) - int(qty)
         if int(available_qty) >= int(qty):
             amount = int(rate)*int(qty)
             query = ("insert into sales(sales_id, sales_date, sales_time, item_id,"
-                     "qty, rate, amount) values(%s, %s, %s, %s, %s, %s, %s)")
-            my_cursor.execute(query, (max_id, date, time, item_id, qty, rate, amount,))
+                     "qty, rate, amount, item_name) values(%s, %s, %s, %s, %s, %s, %s, %s)")
+            my_cursor.execute(query, (max_id, date, time, item_id, qty, rate, amount, item_name,))
             mydb.commit()
             query = "select cash_balance from company where company_name = %s"
             my_cursor.execute(query, ("Stationery Paradise",))
