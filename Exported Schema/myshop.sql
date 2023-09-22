@@ -76,6 +76,7 @@ CREATE TABLE `purchase` (
   `qty` int DEFAULT NULL,
   `rate` int DEFAULT NULL,
   `amount` decimal(10,2) DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`purchase_id`),
   KEY `item_id` (`item_id`),
   CONSTRAINT `purchase_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE
@@ -97,6 +98,7 @@ CREATE TABLE `sales` (
   `qty` int DEFAULT NULL,
   `rate` int DEFAULT NULL,
   `amount` int DEFAULT NULL,
+  `item_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`sales_id`),
   KEY `item_id` (`item_id`),
   CONSTRAINT `sales_ibfk_1` FOREIGN KEY (`item_id`) REFERENCES `item` (`item_id`) ON DELETE CASCADE
@@ -125,4 +127,4 @@ CREATE TABLE `users_list` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-09-22 12:10:11
+-- Dump completed on 2023-09-22 22:50:55
