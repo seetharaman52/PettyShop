@@ -6,25 +6,19 @@ mydb = mysql.connector.connect(host="localhost", user="root", password="kit@1234
 my_cursor = mydb.cursor()
 my_cursor.execute("use myshop")
 
-
-@app.route("/main_page")
-def main_page():
-    query = "select cash_balance from company where company_name = %s"
-    my_cursor.execute(query, ("Stationery Paradise",))
-    amount = my_cursor.fetchall()
-    return render_template('main.html', items=list_of_items(),
-                           cash_balance=amount[0][0], available_items=list_of_items(),
-                           his=list_of_items_history())
-
-
-@app.route("/logout", methods=["POST"])
+@app.route("/logout", methods=["GET", "POST"])
 def log_out():
-    session.clear()
-    return render_template("index.html")
+    session["logged_in"] = False
+    return redirect(url_for("index"))
 
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    return render_template("index.html")
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
     username = None
     password = None
     if request.method == "POST":
@@ -34,6 +28,7 @@ def index():
         my_cursor.execute(u_query,(username,))
         res = my_cursor.fetchone()
         if res and res[0] == username and res[0] == password:
+            session["logged_in"] = True
             query = "select cash_balance from company where company_name = %s"
             my_cursor.execute(query, ("Stationery Paradise",))
             amount = my_cursor.fetchall()
@@ -41,7 +36,16 @@ def index():
                                    cash_balance=amount[0][0], available_items=list_of_items())
         else:
             return render_template("error.html")
-    return render_template("index.html")
+
+
+@app.route("/main_page")
+def main_page():
+    query = "select cash_balance from company where company_name = %s"
+    my_cursor.execute(query, ("Stationery Paradise",))
+    amount = my_cursor.fetchall()
+    return render_template('main.html', items=list_of_items(),
+                           cash_balance=amount[0][0], available_items=list_of_items(),
+                           his=list_of_items_history())
 
 
 def list_of_items():
@@ -173,7 +177,7 @@ def sell_items():
     if check[0]:
         available_qty = check[1]
         rem = int(available_qty) - int(qty)
-        if int(available_qty) > int(qty):
+        if int(available_qty) >= int(qty):
             amount = int(rate)*int(qty)
             query = ("insert into sales(sales_id, sales_date, sales_time, item_id,"
                      "qty, rate, amount) values(%s, %s, %s, %s, %s, %s, %s)")
