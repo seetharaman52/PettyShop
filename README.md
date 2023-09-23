@@ -64,7 +64,7 @@
 
 ### Note: Use this query before login: 
 	insert into users_list(user, secretkey) values('admin','admin');
- 	insert into company(company_name, cash_balance) values('Stationery Paradise', 1);
+ 	insert into company(company_name, cash_balance) values('Stationery Paradise', 0);
 	
 ### Project Structure :
 
