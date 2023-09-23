@@ -239,20 +239,20 @@ def get_qty(item_id):
         return 0
 
 
-@app.route("/add_user")
-def add_user():
-    user_name = request.form.get('username')
-    pass_word = request.form.get('password')
-    query = "select user from users_list"
-    my_cursor.execute(query)
-    res = my_cursor.fetchall()
-    if res[0][0] != user_name:
-        q = "insert into users_list(user, secretkey) values(%s, %s)"
-        my_cursor.execute(q,(user_name, pass_word,))
-        mydb.commit()
-        return render_template("userAdded.html")
-    else:
-        return render_template("userExist.html")
+# @app.route("/add_user")
+# def add_user():
+#     user_name = request.form.get('username')
+#     pass_word = request.form.get('password')
+#     query = "select user from users_list"
+#     my_cursor.execute(query)
+#     res = my_cursor.fetchall()
+#     if res[0][0] != user_name:
+#         q = "insert into users_list(user, secretkey) values(%s, %s)"
+#         my_cursor.execute(q,(user_name, pass_word,))
+#         mydb.commit()
+#         return render_template("userAdded.html")
+#     else:
+#         return render_template("userExist.html")
 
 
 @app.route("/check_item_exists_1")
